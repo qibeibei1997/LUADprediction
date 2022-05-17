@@ -6,5 +6,4 @@
 
 # Overall algorithm
 
-
-
+![](https://github.com/qibeibei1997/LUADprediction/blob/master/img/Fig1.jpg)
