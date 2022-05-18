@@ -355,12 +355,12 @@ def buildIntegratedDataset_DNN_selectN(xy_gxpr, xy_meth, mode, nSamples):
 	return xy_me_ge_values
 
 
-XY_gxpr = pd.read_csv(r"F:\lung cancer\The data processing\Preliminary Cartesian product\gene.csv", encoding="UTF-8", low_memory=False, index_col=0)
+XY_gxpr = pd.read_csv(r"........\gene.csv", encoding="UTF-8", low_memory=False, index_col=0)
 print(XY_gxpr)
 XY_gxpr = XY_gxpr.values
 print(XY_gxpr)
 print(XY_gxpr.shape)
-XY_meth = pd.read_csv(r"F:\lung cancer\The data processing\Preliminary Cartesian product\meth.csv", encoding="UTF-8", low_memory=False, index_col=0)
+XY_meth = pd.read_csv(r"........\meth.csv", encoding="UTF-8", low_memory=False, index_col=0)
 print(XY_meth)
 XY_meth = XY_meth.values
 print(XY_meth)
@@ -368,10 +368,10 @@ print(XY_meth.shape)
 
 input_data_mode = "all"
 if input_data_mode == "all":
-	# integrate two heterogenous dataset 集成两个异构数据集
+	# integrate two heterogenous dataset
 	XY_gxpr_meth = buildIntegratedDataset_DNN(XY_gxpr, XY_meth, "unbalanced")
 else:
-	# integrate two heterogenous dataset with randomly selected N samples 使用随机选择的N个样本集成两个异构数据集
+	# integrate two heterogenous dataset with randomly selected N samples 
 	nSamples = 2000  # for each label
 	XY_gxpr_meth = buildIntegratedDataset_DNN_selectN(XY_gxpr, XY_meth, "unbalanced", nSamples)
 
