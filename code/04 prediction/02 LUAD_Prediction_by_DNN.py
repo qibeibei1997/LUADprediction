@@ -1025,22 +1025,22 @@ def main(args):
 			# make training, test dataset by our feature selection approach
 			thresh_pval_me = 0.05
 			thresh_pval_ge = 0.05
-			thresh_lfc_me = 1.32
-			thresh_lfc_ge = 1.38
+			thresh_lfc_me = ...
+			thresh_lfc_ge = ...
 
-			mapTableFile = "F:\lung cancer\gse139032\GPL8490-65.txt"
+			mapTableFile = ".....\GPL8490-65.txt"
 			# training
 			# load DEG, DMG for
 			degSet, _ = load_DEG_DMG(input_dir + "/DEG/[train " + str(k) + "] Tu DEG.csv", thresh_lfc_ge, thresh_pval_ge, "DEG", mapTableFile)
 			dmgSet, geneCpgSet_map = load_DEG_DMG(input_dir + "/DMP/[train " + str(k) + "] Tu DMP.csv", thresh_lfc_me, thresh_pval_me, "DMP", mapTableFile)
 
 			its_geneSet = degSet & dmgSet
-			print("重合基因个数its_geneSet: " + str(len(its_geneSet)))
-			print('deg和dmg的重合基因:' + str(its_geneSet)+'\n')
+			print("its_geneSet: " + str(len(its_geneSet)))
+			print('deg dmg:' + str(its_geneSet)+'\n')
 
 			# print("train_xy_gxpr: " + str(train_xy_gxpr.shape))
 			# print("train_xy_meth: " + str(train_xy_meth.shape))
-			print("DEG,DMP降维后，做DNN")
+			print("DEG,DMP DNN")
 			# our feature selection approach
 			print('train_xy_gxpr:')
 			train_xy_gxpr = applyFeatSel_DEG_intersectGene(input_dir + "/XY_gexp_train_" + str(k) + "_ML_input.tsv", its_geneSet)

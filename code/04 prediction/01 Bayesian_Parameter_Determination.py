@@ -253,21 +253,21 @@ def generate_nn(num_hidden, size_layer, learning_rate, dropout_rate):
 # divide data into X and Y
 def partitionTrainTest_ML_for_CV_DNN(xy_me_ge_values):
 
-	np.random.shuffle(xy_me_ge_values)	# 功能：生成随机列表,洗牌，生成随机列表，打乱原有的顺序xy_me_ge_values=[1 3 9 6 4]
+	np.random.shuffle(xy_me_ge_values)	# xy_me_ge_values=[1 3 9 6 4]
 
 	x_data_List = []
 	y_data_List = []
 
-	colSize = len(xy_me_ge_values[0])  # 返回对象的长度
+	colSize = len(xy_me_ge_values[0])  # 
 
 	for i in range(len(xy_me_ge_values)):
-		x_tmpRow = xy_me_ge_values[i, 0:colSize - 2]   # 语法：list1[start:stop:step]
+		x_tmpRow = xy_me_ge_values[i, 0:colSize - 2]   # list1[start:stop:step]
 		y_tmpRow = xy_me_ge_values[i, colSize - 1:colSize]
 
-		x_data_List.append(x_tmpRow)    # append() 方法用于在列表末尾添加新的对象。
+		x_data_List.append(x_tmpRow)    # append() 
 		y_data_List.append(y_tmpRow)
 
-	return np.array(x_data_List), np.array(y_data_List)  # np.array()的用法将列表list或元组tuple转换为 ndarray 数组
+	return np.array(x_data_List), np.array(y_data_List)  # np.array()list tuple ndarray
 
 
 # do machine learning (RF, SVM, NB) from the given training and test dataset
@@ -278,7 +278,7 @@ def doMachineLearning_single_Kfold(xy_train, xy_test, outfilename, k):
 	x_train, y_train = partitionTrainTest_ML_for_CV_DNN(xy_train)
 	x_test, y_test = partitionTrainTest_ML_for_CV_DNN(xy_test)
 
-	y_train = y_train.astype(np.int32)   # 字符串数组转换为数值型
+	y_train = y_train.astype(np.int32)   # 
 	y_test = y_test.astype(np.int32)
 
 	print("x_train: " + str(x_train.shape))
@@ -363,8 +363,7 @@ def doMachineLearning_single_Kfold(xy_train, xy_test, outfilename, k):
 
 	fout.close()
 
-# 读取笛卡尔合并后的数据集
-XY_gxpr_meth = pd.read_csv(r"F:\lung cancer\The data processing\XY_gxpr_meth.csv", encoding="UTF-8", low_memory=False,header= None)
+XY_gxpr_meth = pd.read_csv(r"........\XY_gxpr_meth.csv", encoding="UTF-8", low_memory=False,header= None)
 print(XY_gxpr_meth)
 XY_gxpr_meth = XY_gxpr_meth.values
 print(XY_gxpr_meth)
@@ -417,7 +416,7 @@ for tr_idx, te_idx in kf.split(XY_gxpr_meth):
 	# doMachineLearning_single_Kfold(xy_train, xy_test, "./dataset/BO_input_ML_test_result.txt", 1)
 
 	# file name for final result
-	log_filename = r'F:\python\ADprediction\results\k_fold_train_test_results/nn-bayesian_hpSearch_' + str(k) + '.log'
+	log_filename = r'......\results\k_fold_train_test_results\nn-bayesian_hpSearch_' + str(k) + '.log'
 	if os.path.exists(log_filename):
 		os.remove(log_filename)
 

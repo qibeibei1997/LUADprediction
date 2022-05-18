@@ -440,8 +440,8 @@ def partitionTrainTest_ML_for_CV_DNN(xy_me_ge_values):
 	return np.array(x_data_List), np.array(y_data_List)
 
 
-# perform conventional machine learning 传统的机器学习
-output_dir_path = r"F:\lung cancer\The data processing2\results\k_fold_train_test_results"
+# perform conventional machine learning
+output_dir_path = r"......\results\k_fold_train_test_results"
 if not os.path.exists(output_dir_path): os.mkdir(output_dir_path)
 
 def doMachineLearning_single_Kfold(xy_train, xy_test, k):
@@ -727,12 +727,12 @@ def main(args):
 			# ExpResult 3. DEG, DMG, DEG + DMG + ML algorithms
 			################################################################################################################
 			# make training, test dataset by our feature selection approach
-			thresh_pval_me = 0.05
-			thresh_pval_ge = 0.05
-			thresh_lfc_me = 1.32
-			thresh_lfc_ge = 1.38
+			thresh_pval_me = ...
+			thresh_pval_ge = ...
+			thresh_lfc_me = ...
+			thresh_lfc_ge = ...
 
-			mapTableFile = "F:\lung cancer\gse139032\GPL8490-65.txt"
+			mapTableFile = ".....\GPL8490-65.txt"
 
 			# training
 			# load DEG, DMG for
@@ -740,10 +740,6 @@ def main(args):
 			dmgSet, geneCpgSet_map = load_DEG_DMG(input_dir + "/DMP/[train " + str(k) + "] Tu DMP.csv", thresh_lfc_me, thresh_pval_me, "DMP", mapTableFile)
 
 			its_geneSet = degSet & dmgSet
-
-			print("输出gene和meth重合基因its_geneSet：" + str(its_geneSet))
-			print("its_geneSet: " + str(len(its_geneSet)) + '个重合基因')
-			print("\n")
 
 			train_xy_gxpr = applyFeatSel_DEG_intersectGene(input_dir + "/XY_gexp_train_" + str(k) + "_ML_input.tsv", its_geneSet)
 			train_xy_meth = applyFeatSel_DMP_intersectGene(input_dir + "/XY_meth_train_" + str(k) + "_ML_input.tsv", its_geneSet, geneCpgSet_map)
@@ -1006,10 +1002,10 @@ if __name__ == '__main__':
 	help_str = "python AD_Prediction_ML.py" + "\n"
 
 	# input directory
-	input_dir_path = r"F:\lung cancer\The data processing2\results\k_fold_train_test"
+	input_dir_path = r"......\results\k_fold_train_test"
 
 	# output directory
-	output_dir_path = r"F:\lung cancer\The data processing2/results\k_fold_train_test_results"
+	output_dir_path = r"......\results\k_fold_train_test_results"
 	if not os.path.exists(output_dir_path): os.mkdir(output_dir_path)
 
 	parser = argparse.ArgumentParser()
