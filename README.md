@@ -28,12 +28,10 @@ Python 3.6
 
 1.data preprocessing
 
-- - Split
+- Split
 
 2.feature selection
 
-
-
-3.
+3.Data combination
 
 4.prediction
