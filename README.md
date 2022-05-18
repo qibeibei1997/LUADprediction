@@ -10,7 +10,7 @@
 
 # Requirements
 
-Python 3.2
+Python 3.6
 
 - numpy (1.16.3)
 - pandas (0.24.2)
@@ -19,5 +19,21 @@ Python 3.2
 
 # Input and Output
 
+## input
 
+- gene expression:
+- DNA methylation:
 
+# Codes
+
+1.data preprocessing
+
+- - Split
+
+2.feature selection
+
+- 
+
+3.
+
+4.prediction
