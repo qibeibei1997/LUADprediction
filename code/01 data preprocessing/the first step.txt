@@ -1,4 +1,0 @@
-Processing of raw data:
-	Gene expression data: data download, probe transformation, de null value, etc
-	DNA methylation data: data download, probe transformation, beta value transformation, de null value, etc
-	
