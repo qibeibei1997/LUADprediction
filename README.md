@@ -12,10 +12,10 @@
 
 Python 3.6
 
-- numpy (1.16.3)
-- pandas (0.24.2)
-- scikit-learn (0.21.0)
-- Tensorflow (1.4.1)
+- numpy (1.19.5)
+- pandas (0.22.0)
+- scikit-learn (0.24.2)
+- Tensorflow (1.2.1)
 
 # Input and Output
 
@@ -27,8 +27,6 @@ Python 3.6
 # Codes
 
 1.data preprocessing
-
-- Split
 
 2.feature selection
 
