@@ -1,5 +1,4 @@
-# 运行后有预测结果
-# import tensorflow.compat.v2 as tf
+
 import numpy
 
 import tensorflow as tf
@@ -232,7 +231,7 @@ def getDEG_limma(filename, Thres_lfc, Thres_pval):
 			geneSet.add(gene)
 
 	print("[limma -DEG] Number of gene set: " + str(len(geneSet)))
-	# print("DEG: " + str(geneSet)+'\n')
+	
 	return geneSet
 
 # do feature selection with DEG
@@ -335,7 +334,7 @@ def applyDimReduction_MI(infilename, num_comp, scatterPlot_fn, mode):
 	data = df.values
 	data = data[:, :-2]
 
-	target = df["Label_No"]  # 最后一列作为每行对应的标签label
+	target = df["Label_No"]  # 
 	# target = np.array(target)
 	target = target.values
 	from minepy import MINE
@@ -349,13 +348,13 @@ def applyDimReduction_MI(infilename, num_comp, scatterPlot_fn, mode):
 
 		m.compute_score(x, y)
 
-		return (m.mic(), 0.5)  # 选择 K 个最好的特征，返回特征选择后的数据
+		return (m.mic(), 0.5)  
 
 	mic_select = SelectKBest(lambda X, y: tuple(map(tuple, array(list(map(lambda x: mic(x, y), X.T))).T)), k=num_comp)
 
-	X_new = mic_select.fit_transform(data, target)  # k个最好的特征在原特征中的索引
+	X_new = mic_select.fit_transform(data, target)  #
 
-	mic_results_indexs = mic_select.get_support(True)  # 得分
+	mic_results_indexs = mic_select.get_support(True)  # 
 
 	# print(mic_results_indexs)
 
@@ -401,26 +400,26 @@ def applyDimReduction_REF(infilename, num_comp, scatterPlot_fn, mode):
 
 	print(xy_values)
 
-	# 导入RFE方法和线性回归基模型
+	# 
 
 	from sklearn.feature_selection import RFE
 
 	from sklearn.linear_model import LinearRegression
 
-	# 自变量特征
+	# 
 
 	feature = xy_values
 
 	rfe = RFE(
 		estimator=LinearRegression(),  # 选择lin线性回归为基模型
-		n_features_to_select=num_comp  # 选区特征数
+		n_features_to_select=num_comp  # 
 	)
 
-	# fit 方法训练选择特征属性
+	# fit 
 
 	X_embedded = rfe.fit_transform(feature, xy_labels_1_column)
 	print(X_embedded)
-	# feature.columns[rfe.get_support()]  # 查看满足条件的属性
+	# feature.columns[rfe.get_support()]  # 
 
 	XY_embedded = np.append(X_embedded, xy_labels, axis=1)
 	print("XY_embedded: " + XY_embedded.shape.__str__()+'\n')
@@ -430,25 +429,14 @@ def applyDimReduction_REF(infilename, num_comp, scatterPlot_fn, mode):
 # do feature selection with t-SNE
 def applyDimReduction_TSNE(infilename, num_comp, scatterPlot_fn, mode):
 	print("applyDimReduction t-SNE")
-	# xy = np.genfromtxt(infilename, unpack=True, delimiter='\t', dtype=str)
-	# xy = np.genfromtxt(infilename, unpack=True, dtype=str)
+	
 	xy = pd.read_csv(infilename, encoding="UTF-8", low_memory=False,index_col=0, delimiter='\t')
 	print(xy)
-	# print(np.isnan(xy).any())
-	# gexp_all_df = pd.read_csv(infilename, encoding="UTF-8", delimiter='\t',index_col=0)
-	# print(gexp_all_df)
-	# print(gexp_all_df.dtypes)
-	# gexp_all_df = gexp_all_df.values
-	# print(gexp_all_df)
-	# xy_values = gexp_all_df[:, :-2]
+	
 	xy = xy.values
 	xy_values = xy[:, :-2]
 	xy_labels = xy[:, -2:]
-	# xy_tp = np.transpose(xy)
-	# print(xy_tp)
-	# print("xy_tp: " + str(xy_tp.shape))
-	# xy_values = xy_tp[1:, 1:-2]int
-	# xy_labels = xy_tp[1:, -2:]
+	
 
 	xy_values = xy_values.astype(np.float)
 	xy_labels = xy_labels.astype(np.float)
@@ -469,24 +457,9 @@ def applyDimReduction_TSNE(infilename, num_comp, scatterPlot_fn, mode):
 	print("xy_values: " + str(xy_values.shape))
 	print("xy_labels: " + str(xy_labels.shape))
 
-	# print(np.isnan(xy_values).any())
+	
 	print(xy_values)
-	# print(xy_labels)
-
-	# xy_values = np.set_printoptions(precision=6)
-	# xy_values = np.round(xy_values, 6)
-
-	# print(xy_values.dtype)
-	# mean = np.round(xy_values, decimals = 6)
-	# numpy.savetxt('mean.txt', xy_values, delimiter=',')
-	# numpy.savetxt('test.csv', xy_values, fmt='%5f', delimiter=',')
-	# a = pd.read_csv(r"F:\lung cancer\The data processing1\test.csv", encoding="gbk",low_memory=False, header=None)
-	# print(a)
-	# a = a.values
-	# # a = np.array(a)
-	# print(a)
-	# # b = np.round(a, decimals=6)
-	# # print(b)
+	
 	embedded = TSNE(n_components=num_comp, method='exact')
 	X_embedded = embedded.fit_transform(xy_values)
 
@@ -1103,42 +1076,42 @@ def main(args):
 			print("\n")
 
 			# REF based approach
-			print('\n RFE降维后，做DNN')
-			train_xy_gxpr_tsne = applyDimReduction_REF(input_dir + "/XY_gexp_train_" + str(k) + "_ML_input.tsv",num_of_dim_gxpr, dirPath_table1_ge + "/tsne_scatter_plot_gxpr", "train")
-			test_xy_gxpr_tsne = applyDimReduction_REF(input_dir + "/XY_gexp_test_" + str(k) + "_ML_input.tsv", num_of_dim_gxpr, dirPath_table1_ge + "/tsne_scatter_plot_gxpr", "test")
-			train_xy_meth_tsne = applyDimReduction_REF(input_dir + "/XY_meth_train_" + str(k) + "_ML_input.tsv",num_of_dim_meth, dirPath_table1_me + "/tsne_scatter_plot_meth", "train")
-			test_xy_meth_tsne = applyDimReduction_REF(input_dir + "/XY_meth_test_" + str(k) + "_ML_input.tsv",num_of_dim_meth, dirPath_table1_me + "/tsne_scatter_plot_meth","test")
-			print(train_xy_gxpr_tsne.shape, train_xy_meth_tsne.shape)
-			train_xy_gxpr_meth_tsne = buildIntegratedDataset_DNN(train_xy_gxpr_tsne, train_xy_meth_tsne,mode)  # "unbalanced"
-			print(test_xy_gxpr_tsne.shape, test_xy_meth_tsne.shape)
-			test_xy_gxpr_meth_tsne = buildIntegratedDataset_DNN(test_xy_gxpr_tsne, test_xy_meth_tsne, mode)
-			dnn_result_output = output_dir + "/[" + str(k) + "][" + mode + "] DNN_deg_dmg [REF].tsv"
-			# doDNN_8(train_xy_gxpr_meth_tsne, test_xy_gxpr_meth_tsne, dnn_result_output, 1500, "no")
+			# print('\n RFE  DNN')
+			# train_xy_gxpr_tsne = applyDimReduction_REF(input_dir + "/XY_gexp_train_" + str(k) + "_ML_input.tsv",num_of_dim_gxpr, dirPath_table1_ge + "/tsne_scatter_plot_gxpr", "train")
+			# test_xy_gxpr_tsne = applyDimReduction_REF(input_dir + "/XY_gexp_test_" + str(k) + "_ML_input.tsv", num_of_dim_gxpr, dirPath_table1_ge + "/tsne_scatter_plot_gxpr", "test")
+			# train_xy_meth_tsne = applyDimReduction_REF(input_dir + "/XY_meth_train_" + str(k) + "_ML_input.tsv",num_of_dim_meth, dirPath_table1_me + "/tsne_scatter_plot_meth", "train")
+			# test_xy_meth_tsne = applyDimReduction_REF(input_dir + "/XY_meth_test_" + str(k) + "_ML_input.tsv",num_of_dim_meth, dirPath_table1_me + "/tsne_scatter_plot_meth","test")
+			# print(train_xy_gxpr_tsne.shape, train_xy_meth_tsne.shape)
+			# train_xy_gxpr_meth_tsne = buildIntegratedDataset_DNN(train_xy_gxpr_tsne, train_xy_meth_tsne,mode)  # "unbalanced"
+			# print(test_xy_gxpr_tsne.shape, test_xy_meth_tsne.shape)
+			# test_xy_gxpr_meth_tsne = buildIntegratedDataset_DNN(test_xy_gxpr_tsne, test_xy_meth_tsne, mode)
+			# dnn_result_output = output_dir + "/[" + str(k) + "][" + mode + "] DNN_deg_dmg [REF].tsv"
+			# # doDNN_8(train_xy_gxpr_meth_tsne, test_xy_gxpr_meth_tsne, dnn_result_output, 1500, "no")
 
 
 			# t-SNE based approach
-			# print('t-SNE降维后，做DNN')
-			# train_xy_gxpr_tsne = applyDimReduction_TSNE(input_dir + "/XY_gexp_train_" + str(k) + "_ML_input.tsv", num_of_dim_gxpr, dirPath_table1_ge + "/tsne_scatter_plot_gxpr", "train")
-			# test_xy_gxpr_tsne = applyDimReduction_TSNE(input_dir + "/XY_gexp_test_" + str(k) + "_ML_input.tsv", num_of_dim_gxpr, dirPath_table1_ge + "/tsne_scatter_plot_gxpr", "test")
-			# train_xy_meth_tsne = applyDimReduction_TSNE(input_dir + "/XY_meth_train_" + str(k) + "_ML_input.tsv", num_of_dim_meth, dirPath_table1_me + "/tsne_scatter_plot_meth", "train")
-			# test_xy_meth_tsne = applyDimReduction_TSNE(input_dir + "/XY_meth_test_" + str(k) + "_ML_input.tsv", num_of_dim_meth, dirPath_table1_me + "/tsne_scatter_plot_meth", "test")
-			# print(train_xy_gxpr_tsne.shape, train_xy_meth_tsne.shape)
-			# train_xy_gxpr_meth_tsne = buildIntegratedDataset_DNN(train_xy_gxpr_tsne, train_xy_meth_tsne, mode)  # "unbalanced"
-			# print(test_xy_gxpr_tsne.shape, test_xy_meth_tsne.shape)
-			# test_xy_gxpr_meth_tsne = buildIntegratedDataset_DNN(test_xy_gxpr_tsne, test_xy_meth_tsne, mode)
-			# dnn_result_output = output_dir + "/[" + str(k) + "]["+ mode + "] DNN_deg_dmg [t-SNE].tsv"
-			# doDNN_8(train_xy_gxpr_meth_tsne, test_xy_gxpr_meth_tsne, dnn_result_output, 1500, "no")
+			print('t-SNE  DNN')
+			train_xy_gxpr_tsne = applyDimReduction_TSNE(input_dir + "/XY_gexp_train_" + str(k) + "_ML_input.tsv", num_of_dim_gxpr, dirPath_table1_ge + "/tsne_scatter_plot_gxpr", "train")
+			test_xy_gxpr_tsne = applyDimReduction_TSNE(input_dir + "/XY_gexp_test_" + str(k) + "_ML_input.tsv", num_of_dim_gxpr, dirPath_table1_ge + "/tsne_scatter_plot_gxpr", "test")
+			train_xy_meth_tsne = applyDimReduction_TSNE(input_dir + "/XY_meth_train_" + str(k) + "_ML_input.tsv", num_of_dim_meth, dirPath_table1_me + "/tsne_scatter_plot_meth", "train")
+			test_xy_meth_tsne = applyDimReduction_TSNE(input_dir + "/XY_meth_test_" + str(k) + "_ML_input.tsv", num_of_dim_meth, dirPath_table1_me + "/tsne_scatter_plot_meth", "test")
+			print(train_xy_gxpr_tsne.shape, train_xy_meth_tsne.shape)
+			train_xy_gxpr_meth_tsne = buildIntegratedDataset_DNN(train_xy_gxpr_tsne, train_xy_meth_tsne, mode)  # "unbalanced"
+			print(test_xy_gxpr_tsne.shape, test_xy_meth_tsne.shape)
+			test_xy_gxpr_meth_tsne = buildIntegratedDataset_DNN(test_xy_gxpr_tsne, test_xy_meth_tsne, mode)
+			dnn_result_output = output_dir + "/[" + str(k) + "]["+ mode + "] DNN_deg_dmg [t-SNE].tsv"
+			doDNN_8(train_xy_gxpr_meth_tsne, test_xy_gxpr_meth_tsne, dnn_result_output, 1500, "no")
 			#
 			# # MI based approach
-			# print('\n MI降维后，做DNN')
-			# test_xy_meth_mi = applyDimReduction_MI(input_dir + "/XY_meth_test_" + str(k) + "_ML_input.tsv", num_of_dim_meth,dirPath_table1_me + "/lda_scatter_plot_meth", "test")
-			# train_xy_gxpr_mi = applyDimReduction_MI(input_dir + "/XY_gexp_train_" + str(k) + "_ML_input.tsv", num_of_dim_gxpr, dirPath_table1_ge + "/lda_scatter_plot_gxpr", "train")
-			# test_xy_gxpr_mi = applyDimReduction_MI(input_dir + "/XY_gexp_test_" + str(k) + "_ML_input.tsv", num_of_dim_gxpr, dirPath_table1_ge + "/lda_scatter_plot_gxpr", "test")
-			# train_xy_meth_mi = applyDimReduction_MI(input_dir + "/XY_meth_train_" + str(k) + "_ML_input.tsv", num_of_dim_meth, dirPath_table1_me + "/lda_scatter_plot_meth","train")
-			# train_xy_gxpr_meth_mi = buildIntegratedDataset_DNN(train_xy_gxpr_mi, train_xy_meth_mi, mode)
-			# test_xy_gxpr_meth_mi = buildIntegratedDataset_DNN(test_xy_gxpr_mi, test_xy_meth_mi, mode)
-			# dnn_result_output = output_dir + "/[" + str(k) + "]["+ mode + "] DNN_deg_dmg [MI].tsv"
-			# doDNN_8(train_xy_gxpr_meth_mi, test_xy_gxpr_meth_mi, dnn_result_output, 1500, "no")
+			# print('\n MI  DNN')
+			test_xy_meth_mi = applyDimReduction_MI(input_dir + "/XY_meth_test_" + str(k) + "_ML_input.tsv", num_of_dim_meth,dirPath_table1_me + "/lda_scatter_plot_meth", "test")
+			train_xy_gxpr_mi = applyDimReduction_MI(input_dir + "/XY_gexp_train_" + str(k) + "_ML_input.tsv", num_of_dim_gxpr, dirPath_table1_ge + "/lda_scatter_plot_gxpr", "train")
+			test_xy_gxpr_mi = applyDimReduction_MI(input_dir + "/XY_gexp_test_" + str(k) + "_ML_input.tsv", num_of_dim_gxpr, dirPath_table1_ge + "/lda_scatter_plot_gxpr", "test")
+			train_xy_meth_mi = applyDimReduction_MI(input_dir + "/XY_meth_train_" + str(k) + "_ML_input.tsv", num_of_dim_meth, dirPath_table1_me + "/lda_scatter_plot_meth","train")
+			train_xy_gxpr_meth_mi = buildIntegratedDataset_DNN(train_xy_gxpr_mi, train_xy_meth_mi, mode)
+			test_xy_gxpr_meth_mi = buildIntegratedDataset_DNN(test_xy_gxpr_mi, test_xy_meth_mi, mode)
+			dnn_result_output = output_dir + "/[" + str(k) + "]["+ mode + "] DNN_deg_dmg [MI].tsv"
+			doDNN_8(train_xy_gxpr_meth_mi, test_xy_gxpr_meth_mi, dnn_result_output, 1500, "no")
 
 
 
@@ -1147,10 +1120,10 @@ if __name__ == '__main__':
 	help_str = "python Tu_Prediction_DNN.py" + "\n"
 
 	# input directory
-	input_dir_path = r"F:\lung cancer\The data processing2\results\k_fold_train_test"
+	input_dir_path = r"........\results\k_fold_train_test"
 
 	# output directory
-	output_dir_path = r"F:\lung cancer\The data processing2\results\k_fold_train_test_results"
+	output_dir_path = r".......\results\k_fold_train_test_results"
 	if not os.path.exists(output_dir_path): os.mkdir(output_dir_path)
 
 	parser = argparse.ArgumentParser()
