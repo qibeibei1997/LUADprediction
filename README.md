@@ -1,4 +1,4 @@
-# Predicting the lung adenocarcinoma and it's biomarkers by integrating gene expression and DNA methylation data
+# Predicting the lung adenocarcinoma and its biomarkers by integrating gene expression and DNA methylation data
 
 # Website
 
